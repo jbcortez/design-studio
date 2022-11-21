@@ -1,0 +1,54 @@
+//@font-face {
+//  font-family: 'LeagueSpartan';
+//  font-weight: bold;
+//  src: url('../Fonts/LeagueSpartan.otf');
+//}
+
+html {
+  font-size: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'LeagueSpartan', sans-serif;
+
+}
+
+
+
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+  outline: 0px solid transparent;
+}
+
+$secondary: #00fdfd;
+$secondaryHover: hsl(180, 85, 50);
+$black: #222;

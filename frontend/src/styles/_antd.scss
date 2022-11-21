@@ -1,0 +1,35 @@
+.anticon svg {
+  display: block;
+}
+
+.ant-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type='text'],
+.ant-input-number {
+  border-radius: 3px;
+}
+
+.ant-slider-track {
+  background-color: #7597ee;
+}
+
+.ant-slider-handle {
+  border-color: #7597ee;
+}
+
+.ant-collapse-header {
+  padding: 0 !important;
+}
+
+.ant-tabs-tab {
+  padding: 0.9rem 0;
+}
+
+.ant-alert-content {
+  //width: 100% !important;
+  //margin-right: 1rem !important;
+}
