@@ -44,7 +44,7 @@ export const createCanvas = async (
     });
 
     await canvas.save();
-    res.status(204).send(id);
+    res.status(200).json(id);
   } catch (error) {
     console.error(error);
     return res.sendStatus(400);

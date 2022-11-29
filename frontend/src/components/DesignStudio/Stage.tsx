@@ -95,10 +95,6 @@ const Stage: React.FC = () => {
     }
   }, [currentContent, editingMode]);
 
-  useEffect(() => {
-    console.log("currentViewId", currentViewId);
-  }, [currentViewId]);
-
   const renderView = () => {
     switch (currentViewId) {
       case 7:

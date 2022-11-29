@@ -64,6 +64,7 @@ const SelectContainer = styled.ul`
   box-sizing: border-box;
   border-radius: 5px;
   list-style: none;
+  overflow: auto;
 `;
 
 const SelectItem = styled.li<{ active: string | null; id: string }>`

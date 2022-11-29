@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useGetCanvasList from "../../hooks/useGetCanvasList";
-
 import DesignSelectItem from "./DesignSelectItem";
 
 const ManageDesignsSelect: React.FC = () => {

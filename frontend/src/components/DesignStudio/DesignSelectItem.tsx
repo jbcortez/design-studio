@@ -3,6 +3,15 @@ import OptionsMenu from "./OptionsMenu";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styled from "styled-components";
+import { setCanvasList, setCurrentCanvasId } from "../../redux/canvasSlice";
+import {
+  setActiveSidebarView,
+  setShowSidebar,
+} from "../../redux/sidebarViewSlice";
+import { useAppDispatch } from "../../redux/reduxHooks";
+import { useNavigate } from "react-router-dom";
+import { CanvasList, CanvasUpdate } from "../../types";
+import { getAllCanvas, updateCanvas } from "../../util/services/canvasServices";
 
 const DesignSelectItem = ({ item, value, setValue }) => {
   const [mouseOver, setMouseOver] = useState<string | null>(null);
@@ -11,6 +20,9 @@ const DesignSelectItem = ({ item, value, setValue }) => {
   const [editTitle, setEditTitle] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const titleRef = useRef<null | HTMLInputElement>(null);
+  const canvasId = item.id;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleOpen = (id: string) => {
     setValue(id);
@@ -48,8 +60,35 @@ const DesignSelectItem = ({ item, value, setValue }) => {
     setTitle(e.target.value);
   };
 
-  const handleTitleBlur = () => {
+  const handleTitleBlur = async (e) => {
     setEditTitle(false);
+    try {
+      const canvas: CanvasUpdate = {
+        id: canvasId,
+        title: e.target.value,
+      };
+
+      await updateCanvas(canvas);
+      const result: CanvasList | void = await getAllCanvas();
+
+      if (result) dispatch(setCanvasList({ canvasList: result }));
+    } catch (error: unknown) {
+      if (error instanceof Error) console.error(error.message);
+      return;
+    }
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      await handleTitleBlur(e);
+    }
+  };
+
+  const handleEdit = () => {
+    dispatch(setCurrentCanvasId({ id: canvasId }));
+    navigate(`/design?content-id=${canvasId}`);
+    dispatch(setActiveSidebarView({ id: 1 }));
+    dispatch(setShowSidebar(true));
   };
 
   useEffect(() => {
@@ -84,6 +123,7 @@ const DesignSelectItem = ({ item, value, setValue }) => {
           value={title}
           disabled={!editTitle}
           onChange={handleTitleChange}
+          onKeyDown={handleKeyDown}
           onBlur={handleTitleBlur}
           ref={titleRef}
         />
@@ -110,7 +150,7 @@ const DesignSelectItem = ({ item, value, setValue }) => {
             setEditTitle={setEditTitle}
           />
         )}
-        <IconContainer onClick={(e) => handleSelect(e, item.id)}>
+        <IconContainer onClick={handleEdit}>
           <EditIcon fontSize={"large"} style={{ color: "inherit" }} />
         </IconContainer>
         <IconContainer onClick={handleOptionsClick}>

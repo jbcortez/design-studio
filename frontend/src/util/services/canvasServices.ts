@@ -50,13 +50,15 @@ export const createCanvas = async (
   if (canvasData)
     try {
       if (controller) {
-        return await axios.post(
+        const result = await axios.post(
           "/api/canvas/create",
           { canvasData },
           { signal: controller.signal }
         );
+        return result.data;
       } else {
-        return await axios.post("/api/canvas/create", { canvasData });
+        const result = await axios.post("/api/canvas/create", { canvasData });
+        return result.data;
       }
     } catch (error) {
       handleError(error);

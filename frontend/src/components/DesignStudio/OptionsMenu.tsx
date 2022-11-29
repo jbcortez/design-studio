@@ -12,7 +12,10 @@ import {
   setCurrentCanvas,
   setCurrentCanvasId,
 } from "../../redux/canvasSlice";
-import { setActiveSidebarView } from "../../redux/sidebarViewSlice";
+import {
+  setActiveSidebarView,
+  setShowSidebar,
+} from "../../redux/sidebarViewSlice";
 import {
   createCanvas,
   deleteContent,
@@ -36,7 +39,6 @@ const OptionsMenu: React.FC<Props> = ({
   canvasId,
   pos,
   setEditTitle,
-
   style,
 }) => {
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ const OptionsMenu: React.FC<Props> = ({
     dispatch(setCurrentCanvasId({ id: canvasId }));
     navigate(`/design?content-id=${canvasId}`);
     dispatch(setActiveSidebarView({ id: 1 }));
+    dispatch(setShowSidebar(true));
   };
 
   const handleRename = () => {

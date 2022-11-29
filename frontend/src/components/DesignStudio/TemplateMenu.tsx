@@ -2,18 +2,27 @@ import React from "react";
 import { useTemplate } from "../../hooks/useTemplate";
 import MenuButton from "./MenuButton";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { createCanvas } from "../../util/services/canvasServices";
+import { createCanvas, getAllCanvas } from "../../util/services/canvasServices";
 import { NEW_CANVAS } from "../../enums";
 import styled from "styled-components";
 import { Title } from "../../styles/util";
 import { templateList } from "../../templateEnums";
 import TemplateItem from "./TemplateItem";
+import { useNavigate } from "react-router-dom";
+import { setCanvasList } from "../../redux/canvasSlice";
+import { useAppDispatch } from "../../redux/reduxHooks";
 
 const TemplateMenu: React.FC = () => {
   const handleTemplate = useTemplate();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleNewContent = async () => {
-    await createCanvas(NEW_CANVAS);
+    const id = await createCanvas(NEW_CANVAS);
+    const result = await getAllCanvas();
+
+    if (result) dispatch(setCanvasList({ canvasList: result }));
+    navigate(`/design?content-id=${id}`);
   };
 
   return (

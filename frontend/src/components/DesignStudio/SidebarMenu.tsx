@@ -4,6 +4,7 @@ import ImageSearchOutlinedIcon from "@mui/icons-material/ImageSearchOutlined";
 import SmartButtonOutlinedIcon from "@mui/icons-material/SmartButtonOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import TitleOutlinedIcon from "@mui/icons-material/TitleOutlined";
+import SourceIcon from "@mui/icons-material/Source";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import {
   setActiveSidebarView,
@@ -30,7 +31,7 @@ const SidebarMenu: React.FC = () => {
     { icon: TitleOutlinedIcon, id: "3", label: "Text" },
     { icon: SmartButtonOutlinedIcon, id: "4", label: "Buttons" },
     { icon: ImageOutlinedIcon, id: "5", label: "Background" },
-    { icon: WidgetsIcon, id: "7", label: "Manage Designs" },
+    { icon: SourceIcon, id: "7", label: "Manage Designs" },
   ];
 
   const sidebarView = useSidebarView();
