@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  Content,
+  BackgroundImg,
+  Canvas,
   EditingMode,
   Element,
   ElementIds,
+  Elements,
   Pos,
+  ResponsiveStyles,
   Template,
 } from "../types";
 
@@ -187,9 +190,30 @@ export const elementSlice = createSlice({
         state.editingMode = editingMode;
       }
     },
-    initFromContent: (state, action: PayloadAction<{ content: Content }>) => {
-      const { content } = action.payload;
-      const elements = content.elements;
+    initFromContent: (state, action: PayloadAction<{ content: Canvas }>) => {
+      const canvas = action.payload.content;
+      let elements: Elements = [];
+      let canvasElement: {
+        id: string;
+        style: ResponsiveStyles;
+        type: "canvas";
+        backgroundImg: BackgroundImg;
+        title: string;
+      };
+
+      if (canvas && canvas.id !== null && canvas.title) {
+        elements = [...canvas.elements];
+
+        canvasElement = {
+          id: canvas.id,
+          style: canvas.style,
+          type: "canvas",
+          title: canvas.title,
+          backgroundImg: canvas.backgroundImg,
+        };
+
+        elements.push(canvasElement);
+      }
 
       if (elements.length > 0) {
         state.list.present = elements;
@@ -351,7 +375,7 @@ export const elementSlice = createSlice({
       if (undo) {
         handleHistory(state);
       }
-      const cta = state.list.present.find((el) => el.type === "cta");
+      const cta = state.list.present.find((el) => el.type === "canvas");
       if (cta) {
         cta.backgroundImg = {
           desktop: {
@@ -1089,8 +1113,8 @@ export const elementSlice = createSlice({
         handleHistory(state);
       }
 
-      const cta = state.list.present.find((el) => el.type === "cta");
-      const tempCtaElement = template.find((el) => el.type === "cta");
+      const cta = state.list.present.find((el) => el.type === "canvas");
+      const tempCtaElement = template.find((el) => el.type === "canvas");
 
       if (tempCtaElement) {
         const tempCtaStyle = tempCtaElement.style;
@@ -1101,7 +1125,7 @@ export const elementSlice = createSlice({
         }
       }
 
-      const temp = template.filter((el) => el.type !== "cta");
+      const temp = template.filter((el) => el.type !== "canvas");
       if (temp && cta) state.list.present = [...temp, cta];
     },
 

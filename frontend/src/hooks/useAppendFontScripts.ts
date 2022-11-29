@@ -1,19 +1,19 @@
 // Append a stylesheet to head for each unique font family
 
 import { useEffect, useState } from "react";
-import { Content } from "../types";
+import { Canvas } from "../types";
 import { queryActiveFontLinks } from "../util/functions";
 import { setLoading } from "../redux/loadingSlice";
 import { useAppDispatch } from "../redux/reduxHooks";
 
-const useAppendFontScripts = (currentContent: Content | null) => {
+const useAppendFontScripts = (currentCanvas: Canvas | null) => {
   const [fontFamilies, setFontFamilies] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   // Store all unique font families in state
   useEffect(() => {
-    if (currentContent && Object.keys(currentContent).length > 0) {
+    if (currentCanvas && Object.keys(currentCanvas).length > 0) {
       setFontFamilies(
-        currentContent.elements
+        currentCanvas.elements
           .map((el) => el.style.desktop.fontFamily?.value)
           .reduce((acc: string[], font: string) => {
             if (font && !acc.includes(font)) {
@@ -23,7 +23,7 @@ const useAppendFontScripts = (currentContent: Content | null) => {
           }, [] as string[])
       );
     }
-  }, [currentContent]);
+  }, [currentCanvas]);
 
   // Load stylesheet for each font family
   useEffect(() => {

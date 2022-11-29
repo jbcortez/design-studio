@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Select } from "antd";
 import styled from "styled-components";
-import { setCurrentContentId } from "../../redux/contentSlice";
+import { setCurrentCanvasId } from "../../redux/canvasSlice";
 import { setActiveSidebarView } from "../../redux/sidebarViewSlice";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { useNavigate } from "react-router-dom";
-import useCurrentCta from "../../hooks/useCurrentContent";
-import useGetContentList from "../../hooks/useGetContentList";
+import useCurrentCanvas from "../../hooks/useCurrentCanvas";
+import useGetCanvasList from "../../hooks/useGetCanvasList";
 
 const { Option } = Select;
 
@@ -18,11 +18,11 @@ const AnnouncementSelector: React.FC<Props> = ({ style }) => {
   const [value, setValue] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const currentContent = useCurrentCta();
-  const contentList = useGetContentList();
+  const currentContent = useCurrentCanvas();
+  const contentList = useGetCanvasList();
 
   const handleChange = (value) => {
-    dispatch(setCurrentContentId({ id: value }));
+    dispatch(setCurrentCanvasId({ id: value }));
     navigate(`/design?content-id=${value}`);
     dispatch(setActiveSidebarView({ id: 1 }));
   };

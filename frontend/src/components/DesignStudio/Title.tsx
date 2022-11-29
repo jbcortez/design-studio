@@ -1,40 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { setContentList } from "../../redux/contentSlice";
+import { setCanvasList } from "../../redux/canvasSlice";
 import { useDispatch } from "react-redux";
-import {
-  getAllContent,
-  updateContent,
-} from "../../util/services/contentServices";
+import { getAllCanvas, updateCanvas } from "../../util/services/canvasServices";
 import { setTitle } from "../../redux/elementSlice";
 import EditIcon from "@mui/icons-material/Edit";
-import { ContentUpdate } from "../../types";
+import { CanvasUpdate } from "../../types";
 
 interface Props {
   title: string;
-  ctaId: string;
+  canvasId: string;
 }
 
-const Title: React.FC<Props> = ({ title, ctaId }) => {
+const Title: React.FC<Props> = ({ title, canvasId }) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-
   const [value, setValue] = useState(title);
 
-  const handleTitleBlur = async (
-    e: React.FocusEvent<HTMLInputElement>
-  ): Promise<void> => {
+  const handleTitleBlur = async (): Promise<void> => {
     if (title !== value) {
       try {
-        const contentData: ContentUpdate = {
-          id: ctaId,
+        const canvasData: CanvasUpdate = {
+          id: canvasId,
           title: value,
         };
-        dispatch(setTitle({ id: ctaId, title: value }));
-        await updateContent(contentData);
-        const result = await getAllContent();
+        dispatch(setTitle({ id: canvasId, title: value }));
+        await updateCanvas(canvasData);
+        const result = await getAllCanvas();
 
-        if (result) dispatch(setContentList({ contentList: result }));
+        if (result) dispatch(setCanvasList({ canvasList: result }));
       } catch (error: unknown) {
         if (error instanceof Error) console.error(error.message);
         return;

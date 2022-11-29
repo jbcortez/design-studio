@@ -12,6 +12,7 @@ import {
 import styled from "styled-components";
 import useSidebarView from "../../hooks/useSidebarView";
 import { useAppDispatch } from "../../redux/reduxHooks";
+import useShowSidebar from "../../hooks/useShowSidebar";
 
 interface MenuItem {
   icon: any;
@@ -29,23 +30,23 @@ const SidebarMenu: React.FC = () => {
     { icon: TitleOutlinedIcon, id: "3", label: "Text" },
     { icon: SmartButtonOutlinedIcon, id: "4", label: "Buttons" },
     { icon: ImageOutlinedIcon, id: "5", label: "Background" },
+    { icon: WidgetsIcon, id: "7", label: "Manage Designs" },
   ];
 
   const sidebarView = useSidebarView();
   const dispatch = useAppDispatch();
-
-  const toggleActiveSidebarView = (index: number) => {
-    if (index === 9) {
-      dispatch(setActiveSidebarView({ id: index }));
-      dispatch(setShowSidebar(false));
-    } else {
-      dispatch(setActiveSidebarView({ id: menuItems[index].id }));
-      dispatch(setShowSidebar(true));
-    }
-  };
+  const showSidebar = useShowSidebar();
 
   const handleClick = (index: number) => {
-    toggleActiveSidebarView(index);
+    dispatch(setActiveSidebarView({ id: menuItems[index].id }));
+
+    if (menuItems[index].id === "7") {
+      dispatch(setShowSidebar(false));
+    } else {
+      if (!showSidebar) {
+        dispatch(setShowSidebar(true));
+      }
+    }
   };
 
   return (

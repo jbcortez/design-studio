@@ -2,8 +2,8 @@ import React from "react";
 import { useTemplate } from "../../hooks/useTemplate";
 import MenuButton from "./MenuButton";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { createContent } from "../../util/services/contentServices";
-import { NEW_CTA } from "../../enums";
+import { createCanvas } from "../../util/services/canvasServices";
+import { NEW_CANVAS } from "../../enums";
 import styled from "styled-components";
 import { Title } from "../../styles/util";
 import { templateList } from "../../templateEnums";
@@ -13,7 +13,7 @@ const TemplateMenu: React.FC = () => {
   const handleTemplate = useTemplate();
 
   const handleNewContent = async () => {
-    await createContent(NEW_CTA);
+    await createCanvas(NEW_CANVAS);
   };
 
   return (

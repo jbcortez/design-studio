@@ -36,7 +36,7 @@ const useSetGuidelines = (
   // Get CTA element from elements array
   useEffect(() => {
     if (elements.length > 0) {
-      const ctaElement = elements.find((element) => element.type === "cta");
+      const ctaElement = elements.find((element) => element.type === "canvas");
       if (ctaElement) {
         setCta(ctaElement);
       }
@@ -75,7 +75,7 @@ const useSetGuidelines = (
       if (
         Math.abs(centerOfCtaX - center.x) <= OFFSET &&
         currentComponent.id === id &&
-        currentComponent.type !== "cta"
+        currentComponent.type !== "canvas"
       ) {
         dispatch(showVertCenter({ show: true }));
       } else if (showVerticalGuideline) {
@@ -112,7 +112,7 @@ const useSetGuidelines = (
       if (
         Math.abs(centerOfCtaY - center.y) <= OFFSET &&
         currentComponent.id === id &&
-        currentComponent.type !== "cta"
+        currentComponent.type !== "canvas"
       ) {
         dispatch(showHorizCenter({ show: true }));
       } else if (showHorizontalGuideline) {

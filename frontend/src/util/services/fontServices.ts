@@ -1,18 +1,18 @@
 import { handleError } from "../helpers";
 import axios from "axios";
-import { Fonts } from "../../types";
 
 export const getFonts = async (
   controller?: AbortController
-): Promise<Fonts | void> => {
+): Promise<{ family: string }[] | void> => {
   try {
     let result;
     if (controller) {
-      result = axios.get("/api/fonts", { signal: controller.signal });
+      result = await axios.get("/api/fonts", { signal: controller.signal });
     } else {
-      result = axios.get("/api/fonts");
+      result = await axios.get("/api/fonts");
     }
-    return result;
+
+    return result.data.items;
   } catch (error) {
     handleError(error);
   }

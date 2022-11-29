@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import MenuButton from "./MenuButton";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { setBackgroundImage } from "../../redux/elementSlice";
-import useGetCurrentContentId from "../../hooks/useGetCurrentContentId";
+import useGetCurrentCanvasId from "../../hooks/useGetCurrentCanvasId";
 import styled from "styled-components";
 import { Title } from "../../styles/util";
 import { setCurrentComponent } from "../../redux/currentComponentSlice";
@@ -11,7 +11,7 @@ import { clearSelectedItems } from "../../redux/dragSlice";
 import BackgroundMenuItem from "./BackgroundMenuItem";
 
 const BackgroundMenu: React.FC = () => {
-  const ctaId = useGetCurrentContentId();
+  const ctaId = useGetCurrentCanvasId();
   const sidebarView = useSidebarView();
 
   const src: string =
@@ -31,7 +31,7 @@ const BackgroundMenu: React.FC = () => {
   // If sidebarView === 5, background menu is open, set currentComponent to CTA
   useEffect(() => {
     if (sidebarView === 5 && ctaId) {
-      dispatch(setCurrentComponent({ id: ctaId, type: "cta" }));
+      dispatch(setCurrentComponent({ id: ctaId, type: "canvas" }));
       dispatch(clearSelectedItems());
     }
   }, [sidebarView, ctaId, dispatch]);

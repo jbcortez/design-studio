@@ -4,10 +4,7 @@ import { redo, setEditingMode, undo } from "../../redux/elementSlice";
 import useElements from "../../hooks/useElements";
 import useGetEditingMode from "../../hooks/useGetEditingMode";
 import styled from "styled-components";
-import MenuButton from "./MenuButton";
 import useUnsavedStatus from "../../hooks/useUnsavedStatus";
-import { updateContent } from "../../util/services/contentServices";
-import useGetCurrentContent from "../../hooks/useGetCurrentContent";
 import SavedStatus from "./SavedStatus";
 import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
@@ -18,7 +15,6 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const editingMode = useGetEditingMode();
   const elements = useElements();
-  const contentData = useGetCurrentContent();
 
   const handleUndo = () => {
     if (elements.past.length > 0) dispatch(undo());
@@ -34,10 +30,6 @@ const Header = () => {
 
   const handleSetMobile = () => {
     dispatch(setEditingMode({ editingMode: "mobile" }));
-  };
-
-  const handlePreview = async () => {
-    if (contentData) await updateContent(contentData);
   };
 
   return (
@@ -71,22 +63,11 @@ const Header = () => {
           <PhoneIphoneIcon style={{ color: "#FFF", fontSize: "28px" }} />
         </HeaderIcon>
       </IconsContainer>
-      <MenuButton
-        variant="primary"
-        label="Preview"
-        style={PreviewButtonStyles}
-        onClick={handlePreview}
-      />
     </HeaderContainer>
   );
 };
 
 export default Header;
-
-const PreviewButtonStyles: React.CSSProperties = {
-  position: "absolute",
-  right: ".5rem",
-};
 
 const HeaderContainer = styled.header`
   height: 4.8rem;

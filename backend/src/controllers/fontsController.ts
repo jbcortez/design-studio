@@ -12,7 +12,8 @@ export const getFonts = async (req, res, next): Promise<Fonts | void> => {
   };
   try {
     const response = await axios(options);
-    res.status(200).send(response);
+
+    res.status(200).send(response.data);
   } catch (err) {
     console.log(err);
     next(err);

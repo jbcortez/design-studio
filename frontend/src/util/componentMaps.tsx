@@ -48,7 +48,7 @@ export const elementMap = (
 
   return (
     <MasterElement
-      type={el.type !== "cta" ? el.type : null}
+      type={el.type !== "canvas" ? el.type : null}
       content={el.content}
       style={elStyle}
       key={el.id}

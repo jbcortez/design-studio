@@ -13,10 +13,9 @@ const TemplateItem: React.FC<Props> = ({ src, alt, id, premium }) => {
   const handleTemplate = useTemplate();
 
   return (
-    <TemplateItemStyles premium={premium}>
+    <TemplateItemStyles>
       <Image
         aria-label={"template " + id}
-        premium={premium}
         src={src}
         alt={alt}
         onClick={() => handleTemplate(id)}

@@ -5,11 +5,10 @@ import Header from "../components/DesignStudio/Header";
 import Stage from "../components/DesignStudio/Stage";
 import { useAppDispatch } from "../redux/reduxHooks";
 import { initFromContent } from "../redux/elementSlice";
-import useSetCurrentContentId from "../hooks/useSetCurrentContentId";
-import useSetContentList from "../hooks/useSetContentList";
-import useGetCurrentContent from "../hooks/useGetCurrentContent";
-import useGetCurrentContentId from "../hooks/useGetCurrentContentId";
-import useUpdateContentList from "../hooks/useUpdateContentList";
+import useSetCurrentCanvasId from "../hooks/useSetCurrentCanvasId";
+import useSetCanvasList from "../hooks/useSetCanvasList";
+import useGetCurrentCanvas from "../hooks/useGetCurrentCanvas";
+import useUpdateCanvasList from "../hooks/useUpdateCanvasList";
 import useUpdateCustomColors from "../hooks/useUpdateCustomColors";
 import styled from "styled-components";
 import SidebarMenu from "../components/DesignStudio/SidebarMenu";
@@ -20,18 +19,22 @@ import { useTemplate } from "../hooks/useTemplate";
 import { addToContentList } from "../util/functions";
 import { getTheme } from "../util/services/themeServices";
 import { setTheme } from "../redux/themeSlice";
+import useAutoSave from "../hooks/useAutoSave";
+import useGetCurrentCanvasId from "../hooks/useGetCurrentCanvasId";
+import Modal from "../components/DesignStudio/Modal";
 
 const DesignStudio: React.FC = () => {
-  useSetCurrentContentId();
+  const [hasCanvasIdChanged, setHasCanvasIdChanged] = useState<boolean>(false);
+  useAutoSave();
+  useSetCurrentCanvasId();
   const dispatch = useAppDispatch();
-  const hasRendered = useSetContentList();
-  const contentId = useGetCurrentContentId();
-  const currentContent = useGetCurrentContent();
-  useUpdateContentList();
+  useSetCanvasList();
+  const currentContent = useGetCurrentCanvas();
+  useUpdateCanvasList();
   useUpdateCustomColors();
   useAppendFontScripts(currentContent);
   useRemoveFontScripts();
-
+  const canvasId = useGetCurrentCanvasId();
   const query = useQuery();
   const templateId = query.get("template-id");
   const handleTemplate = useTemplate();
@@ -53,6 +56,12 @@ const DesignStudio: React.FC = () => {
   }, [templateId, handleTemplate]);
 
   useEffect(() => {
+    if (canvasId) {
+      setHasCanvasIdChanged(true);
+    }
+  }, [canvasId]);
+
+  useEffect(() => {
     const controller = new AbortController();
 
     getTheme(controller).then((res) => {
@@ -66,11 +75,13 @@ const DesignStudio: React.FC = () => {
     if (
       currentContent &&
       Object.keys(currentContent).length > 0 &&
-      currentContent.id
+      currentContent.id &&
+      hasCanvasIdChanged
     ) {
       dispatch(initFromContent({ content: currentContent }));
+      setHasCanvasIdChanged(false);
     }
-  }, [currentContent, dispatch, contentId]);
+  }, [currentContent, dispatch, hasCanvasIdChanged]);
 
   return (
     <DesignStudioStyles>
@@ -82,6 +93,7 @@ const DesignStudio: React.FC = () => {
         <Sidebar />
         <Stage />
       </Container>
+      {(!currentContent || !currentContent.id) && <Modal />}
     </DesignStudioStyles>
   );
 };

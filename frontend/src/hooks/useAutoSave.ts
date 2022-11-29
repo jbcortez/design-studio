@@ -1,27 +1,27 @@
 import { useEffect } from "react";
-import { setCurrentContent } from "../redux/contentSlice";
+import { setCurrentCanvas } from "../redux/canvasSlice";
 import { setUnsaved } from "../redux/unsavedSlice";
-import { updateContent } from "../util/services/contentServices";
+import { updateCanvas } from "../util/services/canvasServices";
 import useElements from "./useElements";
-import useGetContentList from "./useGetContentList";
-import useGetCurrentContentId from "./useGetCurrentContentId";
-import useGetCurrentContent from "./useGetCurrentContent";
+import useGetCanvasList from "./useGetCanvasList";
+import useGetCurrentCanvasId from "./useGetCurrentCanvasId";
+import useGetCurrentCanvas from "./useGetCurrentCanvas";
 import { useAppDispatch } from "../redux/reduxHooks";
 
 const AUTOSAVE_INTERVAL: number = 500;
 
 const useAutoSave = () => {
-  const currentContent = useGetCurrentContent();
-  const contentId = useGetCurrentContentId();
+  const currentCanvas = useGetCurrentCanvas();
+  const canvasId = useGetCurrentCanvasId();
   const elements = useElements().present;
   const dispatch = useAppDispatch();
-  const contentList = useGetContentList();
+  const canvasList = useGetCanvasList();
 
   useEffect(() => {
     const controller = new AbortController();
     const timer = setTimeout(() => {
-      if (currentContent && Object.keys(currentContent).length > 0) {
-        updateContent(currentContent, controller);
+      if (currentCanvas && Object.keys(currentCanvas).length > 0) {
+        updateCanvas(currentCanvas, controller);
       }
       dispatch(setUnsaved(false));
     }, AUTOSAVE_INTERVAL);
@@ -30,18 +30,18 @@ const useAutoSave = () => {
       controller.abort();
       clearTimeout(timer);
     };
-  }, [currentContent, dispatch]);
+  }, [currentCanvas, dispatch]);
 
   useEffect(() => {
-    if (contentList.length > 0 && contentId) {
-      const currentContent = contentList.find((item) => contentId === item.id);
-      if (currentContent) {
-        dispatch(setCurrentContent({ currentContent }));
+    if (canvasList.length > 0 && canvasId) {
+      const currentCanvas = canvasList.find((item) => canvasId === item.id);
+      if (currentCanvas) {
+        dispatch(setCurrentCanvas({ currentCanvas }));
       }
     } else {
-      dispatch(setCurrentContent({ currentContent: null }));
+      dispatch(setCurrentCanvas({ currentCanvas: null }));
     }
-  }, [contentList, dispatch, contentId]);
+  }, [canvasList, dispatch, canvasId]);
 
   useEffect(() => {
     dispatch(setUnsaved(true));

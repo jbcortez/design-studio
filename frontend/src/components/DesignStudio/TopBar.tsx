@@ -51,7 +51,7 @@ const TopBar: React.FC = () => {
   // Set backgroundImg in state if it exists
   useEffect(() => {
     if (elements) {
-      const cta = elements.find((element) => element.type === "cta");
+      const cta = elements.find((element) => element.type === "canvas");
       if (cta?.backgroundImg?.desktop.src || cta?.backgroundImg?.mobile.src) {
         setBackgroundImgExists(true);
       }
@@ -329,7 +329,7 @@ const TopBar: React.FC = () => {
         )}
       </TopBarStyles>
     );
-  } else if (currentComponent.type === "cta" && selected.length < 2) {
+  } else if (currentComponent.type === "canvas" && selected.length < 2) {
     return (
       <TopBarStyles data-testid="top-bar">
         <CustomColorPicker id={"background"} style={{ marginBottom: "0" }} />

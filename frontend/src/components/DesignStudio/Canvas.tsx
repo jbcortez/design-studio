@@ -5,8 +5,8 @@ import { setCurrentComponent } from "../../redux/currentComponentSlice";
 import { setSelected, setTargetStartPos } from "../../redux/dragSlice";
 import { setActiveSidebarView } from "../../redux/sidebarViewSlice";
 import useElements from "../../hooks/useElements";
-import useGetCurrentContentId from "../../hooks/useGetCurrentContentId";
-import useGetCurrentContent from "../../hooks/useGetCurrentContent";
+import useGetCurrentCanvasId from "../../hooks/useGetCurrentCanvasId";
+import useGetCurrentCanvas from "../../hooks/useGetCurrentCanvas";
 import useGetEditingMode from "../../hooks/useGetEditingMode";
 import useGetSelectedItems from "../../hooks/useGetSelectedItems";
 import Title from "./Title";
@@ -25,7 +25,7 @@ interface Props {
   ref: React.ForwardedRef<HTMLDivElement>;
 }
 
-const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
+const Canvas: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
   const dispatch = useAppDispatch();
   const elements = useElements().present;
   const editingMode = useGetEditingMode();
@@ -38,9 +38,9 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
   // Passed to Styled Component to show/hide guidelines.
   const [showHorizontalGuideline, showVerticalGuideline] = useGuidelines();
 
-  const ctaId = useGetCurrentContentId();
+  const canvasId = useGetCurrentCanvasId();
 
-  const currentCta = useGetCurrentContent();
+  const currentCanvas = useGetCurrentCanvas();
   const [delta, setDelta] = useState<Delta>({ x: 0, y: 0 });
   const [elStyle, setElStyle] = useState<Style>({} as Style);
   const [target, setTarget] = useState<{ x: 0; y: 0; id: null | string }>({
@@ -66,11 +66,12 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
   // Set Cta element in state
   useEffect(() => {
     let el: Element | undefined;
-    if (ctaId && elements && elements.length > 0) {
-      el = elements.find((el) => el.id === ctaId);
+
+    if (canvasId && elements && elements.length > 0) {
+      el = elements.find((el) => el.id === canvasId);
     }
     if (el) setCtaElement(el);
-  }, [elements, ctaId]);
+  }, [elements, canvasId]);
 
   // Passed to MasterElement to Draggable component onStart event. If not holding shift key, set targetStartPos to current position, and set target to current position.
   const startEvent = useCallback(
@@ -89,8 +90,8 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
 
   // CTAContainer onClick handler: Sets current component as CTA, sets sidebar view to BackgroundMenu, and clears selected array.
   const handleOnClick: React.MouseEventHandler = useCallback(() => {
-    if (ctaElement !== null && currentComponent.type !== "cta")
-      dispatch(setCurrentComponent({ id: ctaElement.id, type: "cta" }));
+    if (ctaElement !== null && currentComponent.type !== "canvas")
+      dispatch(setCurrentComponent({ id: ctaElement.id, type: "canvas" }));
 
     if (sidebarView !== 5) dispatch(setActiveSidebarView({ id: 5 }));
 
@@ -166,7 +167,7 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
 
   return (
     <Container zoom={zoom} data-testid="cta">
-      <Title ctaId={ctaId} title={currentCta?.title || ""} />
+      <Title canvasId={canvasId} title={currentCanvas?.title || ""} />
 
       {!loading ? (
         <CTAContainer
@@ -175,7 +176,7 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
           elStyle={elStyle}
           ref={ref}
           style={{ position: "relative", top: "0", left: "0" }}
-          id={ctaId}
+          id={canvasId}
           onClick={handleOnClick}
         >
           <BackgroundColor color={elStyle.background?.value as string} />
@@ -191,7 +192,7 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
           {elements &&
             elements.length > 0 &&
             elements
-              .filter((el) => el.type !== "cta")
+              .filter((el) => el.type !== "canvas")
               .map((el) =>
                 elementMap(
                   el,
@@ -221,7 +222,7 @@ const CTA: React.FC<Props> = React.forwardRef(({ ...props }, ref) => {
   );
 });
 
-export default CTA;
+export default Canvas;
 
 const Container = styled.div.attrs<{ zoom: number }>((props) => ({
   style: {

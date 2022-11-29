@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import CTA from "./CTA";
+import CTA from "./Canvas";
 import TopBar from "./TopBar";
 import styled from "styled-components";
 import useGetStatusAlert from "../../hooks/useGetStatusAlert";
-import useGetCurrentContent from "../../hooks/useGetCurrentContent";
+import useGetCurrentCanvas from "../../hooks/useGetCurrentCanvas";
 import useSidebarView from "../../hooks/useSidebarView";
 import useShowSidebar from "../../hooks/useShowSidebar";
 import useGetEditingMode from "../../hooks/useGetEditingMode";
 import useZoom from "../../hooks/useZoom";
-import Help from "./Help";
 import StatusAlert from "./StatusAlert";
+import ManageDesigns from "./ManageDesigns";
 
 const Stage: React.FC = () => {
   const currentViewId = useSidebarView();
@@ -17,13 +17,14 @@ const Stage: React.FC = () => {
   const contentRef = useRef(null);
   const showSidebar = useShowSidebar();
   const editingMode = useGetEditingMode();
-  const currentContent = useGetCurrentContent();
+  const currentContent = useGetCurrentCanvas();
 
   // Stage rect.width & height. Used for automatically settings zoom value based on available space
   const [windowInnerWidth, setWindowInnerWidth] = useState<number>(0);
   const [windowInnerHeight, setWindowInnerHeight] = useState<number>(0);
   const [contentWidth, setContentWidth] = useState<number>(0);
   const [contentHeight, setContentHeight] = useState<number>(0);
+
   useZoom(contentWidth, contentHeight, windowInnerWidth, windowInnerHeight);
 
   // Set window width and height on load and when window is resized.
@@ -94,19 +95,30 @@ const Stage: React.FC = () => {
     }
   }, [currentContent, editingMode]);
 
+  useEffect(() => {
+    console.log("currentViewId", currentViewId);
+  }, [currentViewId]);
+
+  const renderView = () => {
+    switch (currentViewId) {
+      case 7:
+        return <ManageDesigns />;
+      default:
+        return (
+          <>
+            <TopBar />
+            {status.message && <StatusAlert />}
+            <BackdropStyles data-testid="backdrop">
+              {currentContent && currentContent.id && <CTA ref={contentRef} />}
+            </BackdropStyles>
+          </>
+        );
+    }
+  };
+
   return (
     <StageStyles view={currentViewId} data-testid="stage">
-      {currentViewId === 9 ? (
-        <Help />
-      ) : (
-        <>
-          <TopBar />
-          {status.message && <StatusAlert />}
-          <BackdropStyles data-testid="backdrop">
-            {currentContent && currentContent.id && <CTA ref={contentRef} />}
-          </BackdropStyles>
-        </>
-      )}
+      {renderView()}
     </StageStyles>
   );
 };
@@ -126,7 +138,7 @@ const BackdropStyles = styled.div`
   height: calc(100% - 4rem);
   width: 100%;
   position: relative;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
   display: flex;
   justify-content: center;

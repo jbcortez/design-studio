@@ -345,7 +345,7 @@ export const templateOne: Template = [
         width: { value: 320 },
       },
     },
-    type: "cta",
+    type: "canvas",
     backgroundImg: {
       desktop: {
         src: "",
@@ -675,7 +675,7 @@ export const templateTwo: Template = [
         width: { value: 320 },
       },
     },
-    type: "cta",
+    type: "canvas",
     backgroundImg: {
       desktop: {
         src: "",
@@ -967,7 +967,7 @@ export const templateThree: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
 ];
 
@@ -1214,7 +1214,7 @@ export const templateFour: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
 ];
 
@@ -1539,7 +1539,7 @@ export const templateFive: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
 ];
 
@@ -1785,7 +1785,7 @@ export const templateSix: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
 ];
 
@@ -1807,7 +1807,7 @@ export const blankTemplate: Template = [
         width: { value: 320 },
       },
     },
-    type: "cta",
+    type: "canvas",
     backgroundImg: {
       desktop: {
         src: "",
@@ -1854,7 +1854,7 @@ export const waveTemplate: Template = [
       },
     },
 
-    type: "cta",
+    type: "canvas",
   },
   {
     id: uuidv4(),
@@ -2288,7 +2288,7 @@ export const cliffTemplate: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
   {
     id: uuidv4(),
@@ -2526,7 +2526,7 @@ export const joshuaTreeTemplate: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
   {
     id: uuidv4(),
@@ -3007,7 +3007,7 @@ export const otterTemplate: Template = [
         left: 0,
       },
     },
-    type: "cta",
+    type: "canvas",
   },
   {
     id: uuidv4(),
@@ -3456,7 +3456,7 @@ export const pumpkinTemplate: Template = [
     },
   },
   {
-    type: "cta",
+    type: "canvas",
     id: uuidv4(),
     backgroundImg: {
       desktop: {
@@ -3715,7 +3715,7 @@ export const comoTemplate: Template = [
     link: { url: "", options: "_blank" },
   },
   {
-    type: "cta",
+    type: "canvas",
     id: uuidv4(),
     backgroundImg: {
       desktop: {
@@ -4184,7 +4184,7 @@ export const cityTemplate: Template = [
     },
   },
   {
-    type: "cta",
+    type: "canvas",
     id: uuidv4(),
     backgroundImg: {
       desktop: {
@@ -4930,7 +4930,7 @@ export const cafeTemplate: Template = [
         width: { value: 320 },
       },
     },
-    type: "cta",
+    type: "canvas",
     backgroundImg: {
       desktop: {
         src: "",

@@ -1,14 +1,14 @@
 // Calculates and returns centerOffsetX and centerOffsetY for all elements in the selected array
 // Passed to dispatch(setPosition) in MasterElement.tsx
 
-import { useEffect, useState } from 'react';
-import { Element } from '../types';
+import { useEffect, useState } from "react";
+import { Element } from "../types";
 
-import useElements from './useElements';
-import useGetEditingMode from './useGetEditingMode';
-import useGetSelectedItems from './useGetSelectedItems';
+import useElements from "./useElements";
+import useGetEditingMode from "./useGetEditingMode";
+import useGetSelectedItems from "./useGetSelectedItems";
 
-import useGuidelines from './useGuidelines';
+import useGuidelines from "./useGuidelines";
 
 const useSnapToCenter = (
   centerX: number, // center of element being dragged x-axis
@@ -34,7 +34,7 @@ const useSnapToCenter = (
   // Set cta in state from elements array
   useEffect(() => {
     if (elements.length > 0) {
-      const ctaElement = elements.find((element) => element.type === 'cta');
+      const ctaElement = elements.find((element) => element.type === "canvas");
       if (ctaElement) {
         setCta(ctaElement);
       }
@@ -44,20 +44,20 @@ const useSnapToCenter = (
   // Set center of CTA
   useEffect(() => {
     switch (editingMode) {
-      case 'desktop':
-        if (typeof cta?.style.desktop.width?.value === 'number') {
+      case "desktop":
+        if (typeof cta?.style.desktop.width?.value === "number") {
           setCenterOfCtaX(cta.style.desktop.width.value / 2);
         }
-        if (typeof cta?.style.desktop.height?.value === 'number') {
+        if (typeof cta?.style.desktop.height?.value === "number") {
           setCenterOfCtaY(cta.style.desktop.height.value / 2);
         }
         break;
 
-      case 'mobile':
-        if (typeof cta?.style.mobile.width?.value === 'number') {
+      case "mobile":
+        if (typeof cta?.style.mobile.width?.value === "number") {
           setCenterOfCtaX(cta.style.mobile.width.value / 2);
         }
-        if (typeof cta?.style.mobile.height?.value === 'number') {
+        if (typeof cta?.style.mobile.height?.value === "number") {
           setCenterOfCtaY(cta.style.mobile.height.value / 2);
         }
         break;
@@ -77,7 +77,7 @@ const useSnapToCenter = (
     } else if (selected.length > 1) {
       if (
         isCenteredX &&
-        typeof groupCenterX === 'number' &&
+        typeof groupCenterX === "number" &&
         centerOfCtaX !== 0 &&
         elOffsetX !== null
       ) {
@@ -99,7 +99,7 @@ const useSnapToCenter = (
     } else if (selected.length > 1) {
       if (
         isCenteredY &&
-        typeof groupCenterY === 'number' &&
+        typeof groupCenterY === "number" &&
         centerOfCtaY !== 0 &&
         elOffsetY !== null
       ) {

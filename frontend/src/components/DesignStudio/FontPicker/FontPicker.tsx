@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getGoogleFontsList } from "./services";
+import { getFonts } from "../../../util/services/fontServices";
 import { GFONTS_BASE_URL } from "./constants";
 import { loadPreviewStylesheet } from "./loadStylesheet";
 import chevronDown from "./chevron.svg";
@@ -58,8 +58,9 @@ export const FontPicker: React.FC<Props> = ({
   // Fetch the fonts from the API
   useEffect(() => {
     if (!hasRendered.current) {
-      getGoogleFontsList().then((res) => {
-        setFonts(res.splice(0, limit));
+      getFonts().then((res) => {
+        console.log("font result: ", res);
+        if (res) setFonts(res.splice(0, limit));
       });
     }
 

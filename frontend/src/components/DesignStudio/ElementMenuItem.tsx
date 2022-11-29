@@ -398,7 +398,7 @@ const ElementMenuItem: React.FC<Props> = ({ svg, alt, variant }) => {
 
 export default ElementMenuItem;
 
-const Container = styled.button<{ premium: boolean }>`
+const Container = styled.button`
   cursor: pointer;
   padding: 1rem;
   display: flex;

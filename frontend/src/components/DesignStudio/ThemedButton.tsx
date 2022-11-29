@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import useGetTheme from '../../hooks/useGetTheme';
-import styled from 'styled-components';
-import useAddThemeButton from '../../hooks/useAddThemeButton';
-import { Theme } from '../../types';
+import React from "react";
+import PropTypes from "prop-types";
+import useGetTheme from "../../hooks/useGetTheme";
+import styled from "styled-components";
+import useAddThemeButton from "../../hooks/useAddThemeButton";
+import { Theme } from "../../types";
 
 interface Props {
   type: string;
@@ -15,25 +15,25 @@ const ThemedButton: React.FC<Props> = ({ type, children }) => {
   const handleAddButton = useAddThemeButton();
 
   switch (type) {
-    case 'ThemeBtnOne':
+    case "ThemeBtnOne":
       return (
         <ThemeBtnOne onClick={() => handleAddButton(1)} themeValues={theme}>
           {children}
         </ThemeBtnOne>
       );
-    case 'ThemeBtnTwo':
+    case "ThemeBtnTwo":
       return (
         <ThemeBtnTwo onClick={() => handleAddButton(2)} themeValues={theme}>
           Click Me
         </ThemeBtnTwo>
       );
-    case 'ThemeBtnThree':
+    case "ThemeBtnThree":
       return (
         <ThemeBtnThree onClick={() => handleAddButton(3)} themeValues={theme}>
           Click Me
         </ThemeBtnThree>
       );
-    case 'ThemeBtnFour':
+    case "ThemeBtnFour":
       return (
         <ThemeBtnFour onClick={() => handleAddButton(4)} themeValues={theme}>
           Click Me
@@ -54,11 +54,11 @@ const ThemeBtnOne = styled.button<{ themeValues: Theme }>`
   height: 4rem;
   width: 14.2rem;
   background: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-5');
+    const col = themeValues.theme.find((val) => val.id === "color-5");
     if (col) return col.value;
   }};
   color: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-1');
+    const col = themeValues.theme.find((val) => val.id === "color-1");
     if (col) return col.value;
   }};
   font-size: 1.6rem;
@@ -67,7 +67,7 @@ const ThemeBtnOne = styled.button<{ themeValues: Theme }>`
   align-items: center;
   border: 1px solid
     ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-5');
+      const col = themeValues.theme.find((val) => val.id === "color-5");
       if (col) return col.value;
     }};
   transition: all 200ms ease-in-out;
@@ -76,11 +76,11 @@ const ThemeBtnOne = styled.button<{ themeValues: Theme }>`
 
   &:hover {
     background: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-2');
+      const col = themeValues.theme.find((val) => val.id === "color-2");
       if (col) return col.value;
     }};
     color: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-5');
+      const col = themeValues.theme.find((val) => val.id === "color-5");
       if (col) return col.value;
     }};
   }
@@ -90,11 +90,11 @@ const ThemeBtnTwo = styled.button<{ themeValues: Theme }>`
   height: 4rem;
   width: 14.2rem;
   background: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-2');
+    const col = themeValues.theme.find((val) => val.id === "color-2");
     if (col) return col.value;
   }};
   color: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-5');
+    const col = themeValues.theme.find((val) => val.id === "color-5");
     if (col) return col.value;
   }};
   font-size: 1.6rem;
@@ -109,7 +109,7 @@ const ThemeBtnTwo = styled.button<{ themeValues: Theme }>`
 
   &:hover {
     color: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-4');
+      const col = themeValues.theme.find((val) => val.id === "color-4");
       if (col) return col.value;
     }};
   }
@@ -119,11 +119,11 @@ const ThemeBtnThree = styled.button<{ themeValues: Theme }>`
   height: 4rem;
   width: 14.2rem;
   background: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-2');
+    const col = themeValues.theme.find((val) => val.id === "color-2");
     if (col) return col.value;
   }};
   color: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-8');
+    const col = themeValues.theme.find((val) => val.id === "color-8");
     if (col) return col.value;
   }};
   font-size: 1.3rem;
@@ -133,7 +133,7 @@ const ThemeBtnThree = styled.button<{ themeValues: Theme }>`
   transition: all 200ms ease-in-out;
   border: 1px solid
     ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-8');
+      const col = themeValues.theme.find((val) => val.id === "color-8");
       if (col) return col.value;
     }};
   cursor: pointer;
@@ -141,11 +141,11 @@ const ThemeBtnThree = styled.button<{ themeValues: Theme }>`
 
   &:hover {
     color: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-2');
+      const col = themeValues.theme.find((val) => val.id === "color-2");
       if (col) return col.value;
     }};
     background: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-8');
+      const col = themeValues.theme.find((val) => val.id === "color-8");
       if (col) return col.value;
     }};
   }
@@ -155,11 +155,11 @@ const ThemeBtnFour = styled.button<{ themeValues: Theme }>`
   height: 4rem;
   width: 14.2rem;
   background: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-8');
+    const col = themeValues.theme.find((val) => val.id === "color-8");
     if (col) return col.value;
   }};
   color: ${({ themeValues }) => {
-    const col = themeValues.find((val) => val.reference === 'color-2');
+    const col = themeValues.theme.find((val) => val.id === "color-2");
     if (col) return col.value;
   }};
   font-size: 1.3rem;
@@ -173,7 +173,7 @@ const ThemeBtnFour = styled.button<{ themeValues: Theme }>`
 
   &:hover {
     background: ${({ themeValues }) => {
-      const col = themeValues.find((val) => val.reference === 'color-7');
+      const col = themeValues.theme.find((val) => val.id === "color-7");
       if (col) return col.value;
     }};
   }

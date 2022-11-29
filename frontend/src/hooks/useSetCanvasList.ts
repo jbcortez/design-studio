@@ -1,18 +1,18 @@
 import { useEffect, useRef } from "react";
-import { setContentList } from "../redux/contentSlice";
-import { getAllContent } from "../util/services/contentServices";
+import { setCanvasList } from "../redux/canvasSlice";
+import { getAllCanvas } from "../util/services/canvasServices";
 import { useAppDispatch } from "../redux/reduxHooks";
 
-const useSetContentList = () => {
+const useSetCanvasList = () => {
   const dispatch = useAppDispatch();
   const hasRendered = useRef<boolean>(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    getAllContent(controller).then((res) => {
-      if (res) {
-        dispatch(setContentList({ contentList: res }));
+    getAllCanvas(controller).then((res) => {
+      if (res?.length) {
+        dispatch(setCanvasList({ canvasList: res }));
         hasRendered.current = true;
       }
     });
@@ -23,4 +23,4 @@ const useSetContentList = () => {
   return hasRendered.current;
 };
 
-export default useSetContentList;
+export default useSetCanvasList;

@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Content, ContentList } from "../types";
+import { Canvas, CanvasList } from "../types";
 
-interface CtaState {
-  currentContentId: string;
-  contentList: ContentList;
-  currentContent: Content | null;
+interface CanvasState {
+  currentCanvasId: string;
+  canvasList: CanvasList;
+  currentCanvas: Canvas | null;
   status: {
     message: string | undefined;
     type: "success" | "info" | "warning" | "error" | undefined;
   };
 }
 
-const initialState: CtaState = {
-  currentContentId: "",
-  contentList: [],
-  currentContent: {
+const initialState: CanvasState = {
+  currentCanvasId: "",
+  canvasList: [],
+  currentCanvas: {
     id: "",
     title: "",
     elements: [],
@@ -41,8 +41,8 @@ const initialState: CtaState = {
   status: { message: undefined, type: undefined },
 };
 
-export const contentSlice = createSlice({
-  name: "contentSlice",
+export const canvasSlice = createSlice({
+  name: "canvasSlice",
   initialState,
   reducers: {
     setStatus: (
@@ -56,23 +56,23 @@ export const contentSlice = createSlice({
       state.status.type = action.payload.type;
     },
 
-    setCurrentContent: (
+    setCurrentCanvas: (
       state,
-      action: PayloadAction<{ currentContent: Content | null }>
+      action: PayloadAction<{ currentCanvas: Canvas | null }>
     ) => {
-      const { currentContent } = action.payload;
+      const { currentCanvas } = action.payload;
 
-      state.currentContent = currentContent;
+      state.currentCanvas = currentCanvas;
     },
-    setContentList: (
+    setCanvasList: (
       state,
-      action: PayloadAction<{ contentList: ContentList }>
+      action: PayloadAction<{ canvasList: CanvasList }>
     ) => {
-      state.contentList = action.payload.contentList;
+      state.canvasList = action.payload.canvasList;
     },
-    setCurrentContentId: (state, action: PayloadAction<{ id: string }>) => {
+    setCurrentCanvasId: (state, action: PayloadAction<{ id: string }>) => {
       if (action.payload.id) {
-        state.currentContentId = action.payload.id;
+        state.currentCanvasId = action.payload.id;
       }
     },
   },
@@ -81,9 +81,9 @@ export const contentSlice = createSlice({
 export const {
   setStatus,
 
-  setContentList,
-  setCurrentContent,
-  setCurrentContentId,
-} = contentSlice.actions;
+  setCanvasList,
+  setCurrentCanvas,
+  setCurrentCanvasId,
+} = canvasSlice.actions;
 
-export default contentSlice.reducer;
+export default canvasSlice.reducer;

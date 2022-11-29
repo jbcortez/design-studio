@@ -3,7 +3,7 @@ import { BackgroundImg, Bounds, Pos, Style } from "../../types";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import useZoom from "../../hooks/useZoom";
-import useGetCurrentContentId from "../../hooks/useGetCurrentContentId";
+import useGetCurrentCanvasId from "../../hooks/useGetCurrentCanvasId";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { getImageStyles } from "../../util/functions";
 import useCurrentComponent from "../../hooks/useCurrentComponent";
@@ -49,7 +49,7 @@ const BackgroundImage: React.FC<Props> = ({
   const zoom = useZoom();
   const nodeRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const ctaId = useGetCurrentContentId();
+  const ctaId = useGetCurrentCanvasId();
   const dispatch = useAppDispatch();
   const currentComponent = useCurrentComponent();
 
@@ -66,7 +66,7 @@ const BackgroundImage: React.FC<Props> = ({
   };
 
   const handleMouseDown = () => {
-    if (currentComponent.type !== "cta") {
+    if (currentComponent.type !== "canvas") {
       dispatch(setActiveSidebarView({ id: 5 }));
     }
   };

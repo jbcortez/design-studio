@@ -6,40 +6,41 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
-import useGetContentList from "../../hooks/useGetContentList";
+import useGetCanvasList from "../../hooks/useGetCanvasList";
 import {
-  setContentList,
-  setCurrentContent,
-  setCurrentContentId,
-} from "../../redux/contentSlice";
+  setCanvasList,
+  setCurrentCanvas,
+  setCurrentCanvasId,
+} from "../../redux/canvasSlice";
 import { setActiveSidebarView } from "../../redux/sidebarViewSlice";
 import {
-  createContent,
+  createCanvas,
   deleteContent,
-  getAllContent,
-} from "../../util/services/contentServices";
-import { Content, Pos } from "../../types";
+  getAllCanvas,
+} from "../../util/services/canvasServices";
+import { Canvas, Pos } from "../../types";
 import { useAppDispatch } from "../../redux/reduxHooks";
 
 interface Props {
   setShowOptionsMenu: (
     value: boolean | ((prevVar: boolean) => boolean)
   ) => void;
-  contentId: string;
-  titleRef?: React.RefObject<HTMLSpanElement>;
+  canvasId: string;
+  setEditTitle: (value: boolean | ((prevVar: boolean) => boolean)) => void;
   pos: Pos;
   style?: React.CSSProperties;
 }
 
 const OptionsMenu: React.FC<Props> = ({
   setShowOptionsMenu,
-  contentId,
-  titleRef,
+  canvasId,
   pos,
+  setEditTitle,
+
   style,
 }) => {
   const navigate = useNavigate();
-  const contentList = useGetContentList();
+  const canvasList = useGetCanvasList();
   const [menuPosition, setMenuPosition] = useState<string>("");
   const [offsetWidth, setOffsetWidth] = useState<number>(0);
   const [offsetHeight, setOffsetHeight] = useState<number>(0);
@@ -57,25 +58,21 @@ const OptionsMenu: React.FC<Props> = ({
   const dispatch = useAppDispatch();
 
   const handleEdit = () => {
-    dispatch(setCurrentContentId({ id: contentId }));
-    navigate(`/design?content-id=${contentId}`);
+    dispatch(setCurrentCanvasId({ id: canvasId }));
+    navigate(`/design?content-id=${canvasId}`);
     dispatch(setActiveSidebarView({ id: 1 }));
   };
 
-  const handleSetTitle = () => {
+  const handleRename = () => {
     setShowOptionsMenu(false);
-
-    if (titleRef && titleRef.current) {
-      titleRef.current.contentEditable = "true";
-      titleRef.current.focus();
-    }
+    setEditTitle(true);
   };
 
   const handleDuplicate = async () => {
     // copy target cta from ctaList
     setShowOptionsMenu(false);
 
-    let targetContent = contentList.find((item) => item.id === contentId);
+    let targetContent = canvasList.find((item) => item.id === canvasId);
 
     targetContent = JSON.parse(JSON.stringify(targetContent));
 
@@ -92,12 +89,12 @@ const OptionsMenu: React.FC<Props> = ({
     let result;
 
     if (targetContent) {
-      await createContent(targetContent);
-      result = await getAllContent();
+      await createCanvas(targetContent);
+      result = await getAllCanvas();
     }
 
     if (result) {
-      dispatch(setContentList({ contentList: result }));
+      dispatch(setCanvasList({ canvasList: result }));
     }
   };
 
@@ -105,31 +102,31 @@ const OptionsMenu: React.FC<Props> = ({
     let result;
     setShowOptionsMenu(false);
 
-    await deleteContent(contentId);
-    result = await getAllContent();
+    await deleteContent(canvasId);
+    result = await getAllCanvas();
 
     if (result && result.length > 0) {
-      dispatch(setContentList({ contentList: result }));
+      dispatch(setCanvasList({ canvasList: result }));
     } else {
-      dispatch(setContentList({ contentList: [] }));
+      dispatch(setCanvasList({ canvasList: [] }));
     }
 
     let min = 0;
-    let lastUpdatedContent: Content | null = null;
+    let lastUpdatedCanvas: Canvas | null = null;
 
     if (result) {
       for (let i = 0; i < result.length; i++) {
         if (result[i].updatedAt > min) {
-          lastUpdatedContent = result[i];
+          lastUpdatedCanvas = result[i];
           min = result[i].updatedAt;
         }
       }
 
-      if (lastUpdatedContent?.id) {
-        const content = contentList.find((item) => contentId === item.id);
-        if (content) dispatch(setCurrentContent({ currentContent: content }));
-        dispatch(setCurrentContentId({ id: lastUpdatedContent.id }));
-        navigate(`/design?content-id=${lastUpdatedContent.id}`);
+      if (lastUpdatedCanvas?.id) {
+        const canvas = canvasList.find((item) => canvasId === item.id);
+        if (canvas) dispatch(setCurrentCanvas({ currentCanvas: canvas }));
+        dispatch(setCurrentCanvasId({ id: lastUpdatedCanvas.id }));
+        navigate(`/design?content-id=${lastUpdatedCanvas.id}`);
       }
     }
   };
@@ -194,10 +191,10 @@ const OptionsMenu: React.FC<Props> = ({
         <MenuItem
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleSetTitle();
+              handleRename();
             }
           }}
-          onClick={handleSetTitle}
+          onClick={handleRename}
         >
           <DriveFileRenameOutlineRoundedIcon
             style={{
@@ -264,7 +261,6 @@ export default OptionsMenu;
 
 const Cover = styled.div`
   position: fixed;
-
   top: 0;
   right: 0;
   bottom: 0;

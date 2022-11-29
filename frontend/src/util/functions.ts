@@ -1,8 +1,8 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import React from "react";
-import { Content, ContentList, ElementIds, Pos, Style } from "../types";
+import { CanvasList, ElementIds, Pos, Style } from "../types";
 import { removeElement } from "../redux/elementSlice";
-import { setStatus } from "../redux/contentSlice";
+import { setStatus } from "../redux/canvasSlice";
 import { setCurrentComponent } from "../redux/currentComponentSlice";
 
 // Source: https://stackoverflow.com/questions/54738221/typescript-array-find-possibly-undefind
@@ -362,21 +362,21 @@ export const queryActiveFontLinks = () => {
 };
 
 export const addToContentList = (id: string) => {
-  let contentList: { id: string }[] | null | string = null;
-  const contentListItem = { id: id };
-  contentList = localStorage.getItem("contentList");
+  let canvasList: { id: string }[] | null | string = null;
+  const canvasListItem = { id: id };
+  canvasList = localStorage.getItem("canvasList");
 
-  if (contentList) {
-    contentList = JSON.parse(contentList) as { id: string }[];
+  if (canvasList) {
+    canvasList = JSON.parse(canvasList) as { id: string }[];
 
-    if (!contentList.some((item) => item.id === contentListItem.id)) {
-      contentList.push(contentListItem);
-      localStorage.setItem("contentList", JSON.stringify(contentList));
+    if (!canvasList.some((item) => item.id === canvasListItem.id)) {
+      canvasList.push(canvasListItem);
+      localStorage.setItem("canvasList", JSON.stringify(canvasList));
     }
   } else {
-    contentList = [] as ContentList;
-    contentList.push(contentListItem);
-    localStorage.setItem("contentList", JSON.stringify(contentList));
+    canvasList = [] as CanvasList;
+    canvasList.push(canvasListItem);
+    localStorage.setItem("canvasList", JSON.stringify(canvasList));
   }
 };
 

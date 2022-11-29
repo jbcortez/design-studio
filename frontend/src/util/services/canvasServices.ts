@@ -1,40 +1,41 @@
 import axios from "axios";
-import { Content, ContentList, ContentUpdate } from "../../types";
+import { Canvas, CanvasUpdate, CanvasList } from "../../types";
 import { handleError } from "../helpers";
 
-export const getAllContent = async (
+export const getAllCanvas = async (
   controller?: AbortController
-): Promise<ContentList | void> => {
+): Promise<CanvasList | void> => {
   try {
-    let response: undefined | ContentList;
+    let response: undefined | { data: CanvasList };
     if (controller) {
       response = await axios.get(
-        "/api/content/all",
+        "/api/canvas/all",
 
         { signal: controller.signal }
       );
     } else {
-      response = await axios.post("/api/cta/all");
+      response = await axios.get("/api/canvas/all");
     }
-    return response;
+
+    return response?.data;
   } catch (error) {
     handleError(error);
   }
 };
 
-export const getContentById = async (
+export const getCanvasById = async (
   id: string,
   controller?: AbortController
-): Promise<Content | void> => {
+): Promise<Canvas | void> => {
   if (id)
     try {
-      let response: undefined | Content;
+      let response: undefined | Canvas;
       if (controller) {
-        response = await axios.get(`/api/content/${id}`, {
+        response = await axios.get(`/api/canvas/${id}`, {
           signal: controller.signal,
         });
       } else {
-        response = await axios.get(`/api/content/${id}`);
+        response = await axios.get(`/api/canvas/${id}`);
       }
       return response;
     } catch (error) {
@@ -42,20 +43,20 @@ export const getContentById = async (
     }
 };
 
-export const createContent = async (
-  contentData: Content,
+export const createCanvas = async (
+  canvasData: Canvas,
   controller?: AbortController
-) => {
-  if (contentData)
+): Promise<string | void> => {
+  if (canvasData)
     try {
       if (controller) {
-        await axios.post(
-          "/api/content/create",
-          { contentData },
+        return await axios.post(
+          "/api/canvas/create",
+          { canvasData },
           { signal: controller.signal }
         );
       } else {
-        await axios.post("/api/content/create", { contentData });
+        return await axios.post("/api/canvas/create", { canvasData });
       }
     } catch (error) {
       handleError(error);
@@ -69,35 +70,35 @@ export const deleteContent = async (
   if (id)
     try {
       if (controller) {
-        await axios.delete(`/api/content/delete/${id}`, {
+        await axios.delete(`/api/canvas/delete/${id}`, {
           signal: controller.signal,
         });
       } else {
-        await axios.delete(`/api/content/delete/${id}`);
+        await axios.delete(`/api/canvas/delete/${id}`);
       }
     } catch (error) {
       handleError(error);
     }
 };
 
-export const updateContent = async (
-  contentData: Content | ContentUpdate,
+export const updateCanvas = async (
+  canvasData: Canvas | CanvasUpdate,
   controller?: AbortController
 ) => {
-  if (contentData)
+  if (canvasData)
     try {
       if (controller) {
         await axios.put(
-          "/api/content/update",
-          { contentData, id: contentData.id },
+          "/api/canvas/update",
+          { canvasData, id: canvasData.id },
           {
             signal: controller.signal,
           }
         );
       } else {
-        await axios.put("/api/content/update", {
-          contentData,
-          id: contentData.id,
+        await axios.put("/api/canvas/update", {
+          canvasData,
+          id: canvasData.id,
         });
       }
     } catch (error) {

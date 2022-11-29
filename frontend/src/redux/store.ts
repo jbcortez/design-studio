@@ -3,7 +3,7 @@ import sidebarViewReducer from "./sidebarViewSlice";
 import currentComponentReducer from "./currentComponentSlice";
 import elementReducer from "./elementSlice";
 import unsavedStatusReducer from "./unsavedSlice";
-import contentReducer from "./contentSlice";
+import canvasReducer from "./canvasSlice";
 import dragReducer from "./dragSlice";
 import viewReducer from "./viewSlice";
 import themeReducer from "./themeSlice";
@@ -16,7 +16,7 @@ const store = configureStore({
     currentComponent: currentComponentReducer,
     elements: elementReducer,
     unsavedStatus: unsavedStatusReducer,
-    content: contentReducer,
+    canvas: canvasReducer,
     drag: dragReducer,
     view: viewReducer,
     theme: themeReducer,

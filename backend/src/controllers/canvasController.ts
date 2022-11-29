@@ -2,23 +2,20 @@ import ContentModel from "../models/ContentModel";
 import { v4 as uuidv4 } from "uuid";
 import { Content } from "../types";
 
-export const getAllContent = async (req, res) => {
-  console.log("getting all content");
+export const getAllCanvas = async (req, res) => {
   try {
     const result = await ContentModel.find();
 
-    console.log("getAllContent result: ", result);
     if (result) {
+      console.log("sending result: ", result);
       res.status(200).send(result);
-    } else {
-      res.sendStatus(200);
     }
   } catch (e) {
     res.sendStatus(500);
   }
 };
 
-export const getContentById = async (req: { params: { id: string } }, res) => {
+export const getCanvasById = async (req: { params: { id: string } }, res) => {
   const id = req.params.id;
   try {
     const result = await ContentModel.findOne({ id });
@@ -33,28 +30,28 @@ export const getContentById = async (req: { params: { id: string } }, res) => {
   }
 };
 
-export const createContentPost = async (
-  req: { body: { contentData: Content } },
+export const createCanvas = async (
+  req: { body: { canvasData: Content } },
   res
 ) => {
-  const contentData = req.body.contentData;
+  const canvasData = req.body.canvasData;
   const id = uuidv4();
-  console.log("attempting to create...");
+
   try {
-    const content = new ContentModel({
-      ...contentData,
+    const canvas = new ContentModel({
+      ...canvasData,
       id,
     });
 
-    await content.save();
-    res.status(204).json({ msg: "Content successfully created" });
+    await canvas.save();
+    res.status(204).send(id);
   } catch (error) {
     console.error(error);
     return res.sendStatus(400);
   }
 };
 
-export const deleteContentById = async (
+export const deleteCanvasById = async (
   req: { params: { id: string } },
   res
 ) => {
@@ -62,23 +59,24 @@ export const deleteContentById = async (
 
   try {
     await ContentModel.deleteOne({ id });
-    res.status(200).json({ msg: "Content successfully deleted" });
+    res.status(200).json({ msg: "Canvas successfully deleted" });
   } catch (e) {
     console.error(e);
     res.sendStatus(400);
   }
 };
 
-export const updateContent = async (
-  req: { body: { contentData: Content; id: string } },
+export const updateCanvas = async (
+  req: { body: { canvasData: Content; id: string } },
   res
 ) => {
-  const { contentData, id } = req.body;
+  const { canvasData, id } = req.body;
+
   const protocolRegEx =
     /(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
 
-  if (contentData?.elements) {
-    for (let item of contentData.elements) {
+  if (canvasData?.elements) {
+    for (let item of canvasData.elements) {
       const url = item.link?.url;
       if (url && url.length > 0) {
         if (!url.match(protocolRegEx)) {
@@ -89,11 +87,11 @@ export const updateContent = async (
   }
 
   try {
-    contentData.updatedAt = new Date().getTime();
+    canvasData.updatedAt = new Date().getTime();
     const result = await ContentModel.updateOne(
       { id },
       {
-        $set: contentData,
+        $set: canvasData,
       }
     );
 

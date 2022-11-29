@@ -14,7 +14,7 @@ const DeleteIcon = () => {
   const selected = useGetSelectedItems();
 
   const handleClick = () => {
-    if (currentComponent.type === "cta") {
+    if (currentComponent.type === "canvas") {
       dispatch(clearBackgroundImage({ undo: true }));
     } else {
       dispatch(removeElement({ selected }));

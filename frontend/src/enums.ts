@@ -1,5 +1,5 @@
 import {
-  Content,
+  Canvas,
   ImageElement,
   KeyVal,
   SvgRawElement,
@@ -188,13 +188,24 @@ export const BODYTEXT: TypographyElement = {
   },
 };
 
-export const NEW_CTA: Content = {
+export const NEW_CANVAS: Canvas = {
   id: "",
   title: "Untitled",
   elements: [],
   style: {
-    desktop: {},
-    mobile: {},
+    desktop: {
+      background: { value: "#FFF", default: true },
+      opacity: { value: 1 },
+      height: { value: 490 },
+      width: { value: 980 },
+    },
+
+    mobile: {
+      background: { value: "#FFF", default: true },
+      opacity: { value: 1 },
+      height: { value: 500 },
+      width: { value: 320 },
+    },
   },
   backgroundImg: {
     desktop: { src: "", top: 0, left: 0 },

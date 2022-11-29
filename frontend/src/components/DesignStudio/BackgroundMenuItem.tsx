@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/reduxHooks";
 import { setBackgroundImage } from "../../redux/elementSlice";
-import useGetCurrentContentId from "../../hooks/useGetCurrentContentId";
+import useGetCurrentCanvasId from "../../hooks/useGetCurrentCanvasId";
 
 interface Props {
   src: string;
@@ -10,7 +10,7 @@ interface Props {
 
 const BackgroundMenuItem: React.FC<Props> = ({ src }) => {
   const dispatch = useAppDispatch();
-  const id = useGetCurrentContentId();
+  const id = useGetCurrentCanvasId();
 
   const handleClick = () => {
     dispatch(setBackgroundImage({ id, src }));

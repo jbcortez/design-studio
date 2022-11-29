@@ -1,4 +1,4 @@
-export type Content = {
+export type Canvas = {
   id: string;
   title: string;
   elements: Elements;
@@ -22,7 +22,7 @@ export type Content = {
   updatedAt: number;
 };
 
-export type ContentUpdate = {
+export type CanvasUpdate = {
   id: string;
   title?: string;
   elements?: Elements;
@@ -52,7 +52,7 @@ export interface CurrentComponent {
     | "image"
     | "typography"
     | "button"
-    | "cta"
+    | "canvas"
     | "svg"
     | "rawSvg"
     | "imageSvg"
@@ -60,7 +60,7 @@ export interface CurrentComponent {
     | null;
 }
 
-export type ContentList = Content[];
+export type CanvasList = Canvas[];
 
 export interface Style {
   fontFamily?: { value: string };
@@ -257,7 +257,7 @@ export interface ResponsiveStyles {
 
 export interface Element {
   id: string;
-  type: "image" | "button" | "typography" | "cta" | "rawSvg" | "imageSvg";
+  type: "image" | "button" | "typography" | "canvas" | "rawSvg" | "imageSvg";
   content?: string;
   title?: string;
   variation?: SVGVariation;

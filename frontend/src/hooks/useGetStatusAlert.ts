@@ -1,7 +1,7 @@
 import { useAppSelector } from "../redux/reduxHooks";
 
 const useGetStatusAlert = () => {
-  return useAppSelector((state) => state.content.status);
+  return useAppSelector((state) => state.canvas.status);
 };
 
 export default useGetStatusAlert;
