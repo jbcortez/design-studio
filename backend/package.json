@@ -7,13 +7,13 @@
     "mongoose": "^6.7.2",
     "uuid": "^9.0.0"
   },
-
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc -p .",
+    "prod": "cd .. && cd frontend && npm run build && cd .. && cd backend && npm run build",
     "server": "nodemon src/index.ts",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"cd .. && cd frontend && npm run start\"",
