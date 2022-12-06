@@ -39,8 +39,8 @@ const ColorPicker: React.FC<Props> = ({ params, id, style, label, testId }) => {
   const target = useTargetElement();
   const currentComponent = useCurrentComponent();
   const customColors = useGetCustomColors();
-  const theme = useGetTheme();
-  const themeColors = theme.theme;
+  const colors = useGetTheme();
+  const themeColors = colors.theme;
   const editingMode = useGetEditingMode();
   const { buttonState } = params || {};
   const colorPickerRef = useRef<HTMLDivElement>(null);
@@ -196,7 +196,7 @@ const ColorPicker: React.FC<Props> = ({ params, id, style, label, testId }) => {
 
   useEffect(() => {
     if (
-      themeColors.some(
+      themeColors?.some(
         (col) => col.value === `#${tinyColor(color).toHex()}`.toUpperCase()
       )
     ) {
@@ -366,7 +366,7 @@ const ColorPicker: React.FC<Props> = ({ params, id, style, label, testId }) => {
             <ThemeSwatchContainer>
               <Title>Theme Colors</Title>
               <SwatchGrid>
-                {themeColors.map((color, i) => (
+                {themeColors?.map((color, i) => (
                   <ThemeColorStyles
                     id={color.id}
                     tabIndex={0}
@@ -395,7 +395,7 @@ const ColorPicker: React.FC<Props> = ({ params, id, style, label, testId }) => {
                 >
                   <AddIcon />
                 </CustomColorButton>
-                {customColors.map((item, i) => (
+                {customColors?.map((item, i) => (
                   <CustomColorComponent
                     key={`${item.value}-${i}`}
                     id={item.id}

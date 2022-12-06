@@ -1,6 +1,7 @@
 import * as express from "express";
 import {
   addCustomColor,
+  addTheme,
   deleteCustomColor,
   getCustomColors,
   getTheme,
@@ -10,6 +11,9 @@ const router = express.Router();
 
 // Route: GET /api/theme/
 router.get("/", getTheme);
+
+// Route: POST /api/theme/add-theme
+router.post("/add-theme", addTheme);
 
 // Route: GET /api/theme/custom
 router.get("/custom", getCustomColors);

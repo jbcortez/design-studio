@@ -22,6 +22,8 @@ import { setTheme } from "../redux/themeSlice";
 import useAutoSave from "../hooks/useAutoSave";
 import useGetCurrentCanvasId from "../hooks/useGetCurrentCanvasId";
 import Modal from "../components/DesignStudio/Modal";
+import useAddTheme from "../hooks/useAddTheme";
+import useGetTheme from "../hooks/useGetTheme";
 
 const DesignStudio: React.FC = () => {
   const [hasCanvasIdChanged, setHasCanvasIdChanged] = useState<boolean>(false);
@@ -39,6 +41,8 @@ const DesignStudio: React.FC = () => {
   const templateId = query.get("template-id");
   const handleTemplate = useTemplate();
   const templateHandled = useRef(false);
+
+  useAddTheme();
 
   useEffect(() => {
     if (currentContent?.id) {

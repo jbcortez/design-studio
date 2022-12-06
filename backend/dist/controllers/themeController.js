@@ -12,15 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCustomColor = exports.addCustomColor = exports.getCustomColors = exports.getTheme = void 0;
+exports.addTheme = exports.deleteCustomColor = exports.addCustomColor = exports.getCustomColors = exports.getTheme = void 0;
 const ThemeModel_1 = __importDefault(require("../models/ThemeModel"));
 const uuid_1 = require("uuid");
 const getTheme = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield ThemeModel_1.default.findOne();
-        const theme = result === null || result === void 0 ? void 0 : result.colors;
-        if (theme) {
-            res.status(200).send(theme);
+        if (result) {
+            res.status(200).send(result);
         }
     }
     catch (e) {
@@ -32,10 +31,14 @@ exports.getTheme = getTheme;
 const getCustomColors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield ThemeModel_1.default.findOne();
-        const customColors = result === null || result === void 0 ? void 0 : result.colors.custom;
+        const customColors = result === null || result === void 0 ? void 0 : result.custom;
+        console.log("result: ", result);
+        console.log("customColors, ", customColors);
         if (customColors) {
+            console.log("saving custom color");
             res.status(200).send(customColors);
         }
+        console.log("result not found");
     }
     catch (e) {
         console.error(e);
@@ -49,7 +52,7 @@ const addCustomColor = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const result = yield ThemeModel_1.default.findOne();
         if (result) {
-            result.colors.custom.push(customColor);
+            result.custom.push(customColor);
             yield result.save();
             res.status(201).send({ msg: "Custom color successfully added" });
         }
@@ -65,7 +68,7 @@ const deleteCustomColor = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const result = yield ThemeModel_1.default.findOne();
         if (result) {
-            result.colors.custom = result.colors.custom.filter((color) => color.id !== id);
+            result.custom = result.custom.filter((color) => color.id !== id);
             yield result.save();
             res.status(200).send({ msg: "Custom color successfully deleted" });
         }
@@ -75,4 +78,22 @@ const deleteCustomColor = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.deleteCustomColor = deleteCustomColor;
+const addTheme = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { theme } = req.body;
+    try {
+        const result = yield ThemeModel_1.default.findOne();
+        if (result) {
+            return res.status(200).json({ msg: "Theme already exists" });
+        }
+        else {
+            const newTheme = new ThemeModel_1.default(theme);
+            yield newTheme.save();
+            res.status(201).json(newTheme);
+        }
+    }
+    catch (e) {
+        res.status(500).json({ error: "Error adding theme" });
+    }
+});
+exports.addTheme = addTheme;
 //# sourceMappingURL=themeController.js.map

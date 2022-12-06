@@ -27,6 +27,7 @@ const express = __importStar(require("express"));
 const themeController_1 = require("../../controllers/themeController");
 const router = express.Router();
 router.get("/", themeController_1.getTheme);
+router.post("/add-theme", themeController_1.addTheme);
 router.get("/custom", themeController_1.getCustomColors);
 router.post("/custom", themeController_1.addCustomColor);
 router.delete("/custom/delete/:id", themeController_1.deleteCustomColor);

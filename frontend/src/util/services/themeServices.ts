@@ -5,14 +5,14 @@ import axios from "axios";
 export const getTheme = async (
   controller?: AbortController
 ): Promise<Theme | void> => {
-  let result: undefined | Theme;
+  let result: undefined | { data: Theme };
   try {
     if (controller) {
       result = await axios.get("/api/theme", { signal: controller.signal });
     } else {
       result = await axios.get("/api/theme");
     }
-    return result;
+    return result?.data;
   } catch (error) {
     handleError(error);
   }
@@ -21,7 +21,7 @@ export const getTheme = async (
 export const getCustomColors = async (
   controller?: AbortController
 ): Promise<Colors | void> => {
-  let result: undefined | Colors;
+  let result: undefined | { data: Colors };
   try {
     if (controller) {
       result = await axios.get("/api/theme/custom", {
@@ -30,7 +30,7 @@ export const getCustomColors = async (
     } else {
       result = await axios.get("/api/theme/custom");
     }
-    return result;
+    return result?.data;
   } catch (error) {
     handleError(error);
   }
@@ -72,4 +72,23 @@ export const deleteCustomColor = async (
     } catch (error) {
       handleError(error);
     }
+};
+
+export const addTheme = async (
+  theme: Theme,
+  controller?: AbortController
+): Promise<{ data: Theme } | void> => {
+  try {
+    if (controller) {
+      return await axios.post(
+        "/api/theme/add-theme",
+        { theme },
+        { signal: controller.signal }
+      );
+    } else {
+      return await axios.post("/api/theme/add-theme", { theme });
+    }
+  } catch (error) {
+    handleError(error);
+  }
 };

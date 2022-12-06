@@ -381,11 +381,13 @@ export interface Bounds {
 }
 
 export interface Theme {
-  colors: { theme: Colors; custom: Colors };
+  theme: Colors;
+  custom: Colors;
 }
 
 export interface ThemeModel extends Document {
-  colors: { theme: Colors; custom: Colors };
+  theme: Colors;
+  custom: Colors;
 }
 
 export type SVGVariation =
