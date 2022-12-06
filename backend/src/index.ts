@@ -19,7 +19,6 @@ app.use(express.static(path.join(__dirname, "..", "..", "frontend", "build")));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.text());
-app.use(helmet());
 
 app.use("/api/canvas", canvasRoutes);
 app.use("/api/fonts", fontsRoute);

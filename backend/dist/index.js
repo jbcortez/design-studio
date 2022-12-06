@@ -8,7 +8,6 @@ const path_1 = __importDefault(require("path"));
 const mongo_1 = require("./config/mongo");
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const helmet_1 = __importDefault(require("helmet"));
 const fonts_1 = __importDefault(require("./routes/api/fonts"));
 const canvas_1 = __importDefault(require("./routes/api/canvas"));
 const theme_1 = __importDefault(require("./routes/api/theme"));
@@ -20,7 +19,6 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "..", "..", "fro
 app.use(express_1.default.static("public"));
 app.use(express_1.default.json());
 app.use(express_1.default.text());
-app.use((0, helmet_1.default)());
 app.use("/api/canvas", canvas_1.default);
 app.use("/api/fonts", fonts_1.default);
 app.use("/api/theme", theme_1.default);
